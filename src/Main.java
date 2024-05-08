@@ -7,6 +7,7 @@ public class Main {
         Giocatore[] g = new Giocatore[Giocatore.NGIOCATORI];
         Mazzo mazzo = new Mazzo();
 
+
         for (int i = 0; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
             String nome;
             nome = sc.nextLine();
@@ -17,9 +18,15 @@ public class Main {
         }
 
         for (int i = 1; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
-            try{
-                g[i].join();
-            }
+            g[i].join();
         }
+        int ind = mazzo.getVincitore();
+        nome = g[ind].getNome();
+        System.out.println("Il nome del vincitore e'" + nome);
+
+        int[] arrVin = mazzo.getCarteVincenti();
+        System.out.println("Le carte vincenti sono: ");
+
+        for(int i = 0; )
     }
 }
