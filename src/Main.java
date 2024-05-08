@@ -7,8 +7,22 @@ public class Main {
         System.out.println();
         System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
+            String nome;
+            nome = sc.nextLine();
+            g[i]= Giocatore(nome, i, mazzo);
             System.out.println("i = " + i);
+        }
+        for (int i = 1; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
+            g[i].start();
+        }
+
+        for (int i = 1; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
+            try{
+                g[i].join();
+            }catch (Exception e){
+
+            }
         }
     }
 }
