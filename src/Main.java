@@ -1,32 +1,42 @@
-import java.time.temporal.IsoFields;
 import java.util.Scanner;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        Giocatore[] g=new Giocatore[Giocatore.nGiocatori];
+        Mazzo mazzo=new Mazzo();
+        String nome;
 
-public class Main {
-    public static void main(String[] args) throws InterruptedException { // Eccezione che potrebbe lanciare il join
-        Scanner sc = new Scanner();
-        Giocatore[] g = new Giocatore[Giocatore.NGIOCATORI];
-        Mazzo mazzo = new Mazzo();
-
-
-        for (int i = 0; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
-            String nome;
-            nome = sc.nextLine();
-            g[i]= Giocatore(nome, i, mazzo);
+        // Costruzione di tutti quanti i Giocatori
+        for(int i=0; i<Giocatore.nGiocatori; i++){
+            System.out.print("Inserisci nome giocatore N"+(i+1)+": ");
+            nome=sc.nextLine();
+            g[i]=new Giocatore(mazzo, nome, i);
         }
-        for (int i = 1; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
+
+        // Il Thread viene impostato nello stato di pronto
+        for(int i=0; i<Giocatore.nGiocatori; i++){
             g[i].start();
         }
 
-        for (int i = 1; i < Giocatore.NGIOCATORI; i++) { // Costruzione di tutti i giocatori
-            g[i].join();
+        // Attesa della fine dei Thread da parte del Main
+        for(int i=0; i<Giocatore.nGiocatori; i++){
+            try{
+                g[i].join();
+            }catch(InterruptedException e){
+                // oppure solo (exception e){}
+                throw new RuntimeException(e);
+            }
         }
-        int ind = mazzo.getVincitore();
-        nome = g[ind].getNome();
-        System.out.println("Il nome del vincitore e'" + nome);
 
-        int[] arrVin = mazzo.getCarteVincenti();
-        System.out.println("Le carte vincenti sono: ");
+        // Fine del programma e dichiarazione del vincitore
+        int id=mazzo.getVincitore();
+        nome=g[id].getNome();
+        System.out.println("Il nome del vincitore e': "+nome);
 
-        for(int i = 0; )
+        int[] arrVincenti=mazzo.getCarteVincenti();
+        System.out.println("Le carti vincenti sono: ");
+        for(int i=0; i<arrVincenti.length; i++){
+            System.out.println(arrVincenti[i]);
+        }
     }
 }
